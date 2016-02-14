@@ -44,6 +44,7 @@ double sumFromTo(double* x, int y)
 
 	int n = pow(2,y-1);
 	double sum = 0;
+	#pragma omp parallel for schedule(static) reduction(+:sum)
 	for (size_t i = n; i < n*2; i++)
 	{
 		sum += x[i];

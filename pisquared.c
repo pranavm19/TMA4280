@@ -3,14 +3,27 @@
 #include <math.h>
 #include <omp.h>
 
-double sumFromTo(double* x, int y);
+double sumFromTo(double* x, int y)
+{
+	if (y == 0)
+		return x[0];
+
+	int n = pow(2,y-1);
+	double sum = 0;
+	for (size_t i = n; i < n*2; i++)
+	{
+		sum += x[i];
+	}
+
+	return sum;
+}
 
 int main(int argc, char** argv)
 {
 	double start = omp_get_wtime();
 
 	// A Vector to store the values for v[i] = i^(-2).
-	int k = 14, n;
+	int k = 25, n;
 	n = (int) pow((double) 2,k);
 	double v[n],sum[k],temp;
 	double S = (pow((acos(-1)),2)/ 6.0);
@@ -35,19 +48,4 @@ int main(int argc, char** argv)
 	printf("Execution Time: %0.16f \n", omp_get_wtime() - start);
 
 	return 0;
-}
-
-double sumFromTo(double* x, int y)
-{
-	if (y == 0)
-		return x[0];
-
-	int n = pow(2,y-1);
-	double sum = 0;
-	for (size_t i = n; i < n*2; i++)
-	{
-		sum += x[i];
-	}
-
-	return sum;
 }

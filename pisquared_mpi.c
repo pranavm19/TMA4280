@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 	MPI_Init(&argc, &argv);
 	MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	printf("%d\n",nprocs);
+
 	int n = 1 << k;	
 	// A Vector to store the values for v[i] = i^(-2).
 	double* v = malloc(n*sizeof(double));

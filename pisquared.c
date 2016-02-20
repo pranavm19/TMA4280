@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 	
 	double* v = malloc(n*sizeof(double));
 
-	// Set Elements of Vector.
+	// Set Elements of Vector
 	for(size_t i = 0; i < n; i++){
 		v[i] = 1.0 / pow(i+1,2);
 	}

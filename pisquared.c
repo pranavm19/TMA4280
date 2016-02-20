@@ -6,9 +6,13 @@
 int main(int argc, char** argv)
 {
 	double start = omp_get_wtime();
+	if (argc < 2) {
+		printf ("Requires argument: k.\n");
+		return 1;
+	}
 
 	int k = atoi(argv[1]);
-	if (k <= 0){
+	if (k <= 2){
 		printf("Give me a number >= 3 :)\n");
 		exit (1);
 	}
@@ -34,5 +38,6 @@ int main(int argc, char** argv)
 	
 	printf("Execution Time: %0.16f \n", omp_get_wtime() - start);
 
+	free(v);
 	return 0;
 }

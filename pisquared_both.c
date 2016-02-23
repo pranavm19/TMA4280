@@ -37,6 +37,7 @@ int main(int argc, char** argv)
 	// Summing the Vector
 	double sum = 0.0;
 	int i;
+	#pragma omp parallel for schedule(static) reduction(+:sum)
 	for(i = rank; i < n; i += nprocs){
 		sum += v[i];
 	}

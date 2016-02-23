@@ -9,18 +9,12 @@ int main(int argc, char** argv)
 		printf ("Requires argument: k.\n");
 		return 1;
 	}
-
-	int nprocs, rank ;
-	MPI_Init(&argc, &argv);
-	MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
-	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	
 	int k = atoi(argv[1]);
 	if (k <= 2){
 		printf("Give me a number greater than or equal to 3 :)\n");
 		exit (1);
 	}
-<<<<<<< HEAD
 
 	int nprocs, rank ;
 	MPI_Init(&argc, &argv);
@@ -32,14 +26,8 @@ int main(int argc, char** argv)
 	int my_n = n/nprocs;
 	int tag = 100;
 	double my_sum = 0.0;
-
-=======
-	int n = 1 << k;	
-	// A Vector to store the values for v[i] = i^(-2).
-	double* v = malloc(n*sizeof(double));
 	double time_start;
 	
->>>>>>> 972ec076527cde1a6bb4412defad3c82f5d92c6e
 	if (rank == 0) {
 		time_start = MPI_Wtime();
 		double* v = malloc(n*sizeof(double));	
@@ -75,16 +63,9 @@ int main(int argc, char** argv)
 		double duration = MPI_Wtime () - time_start ;
 		printf ("S = %e, Sn = %e, Error = %e\n", S, Sum, S-Sum);
 		printf("Execution Time: %0.16f \n", duration);
-		// printf("%d\n",nprocs);
 	}
 	
-<<<<<<< HEAD
-	MPI_Finalize();
-=======
-	
-	free(v);
 	MPI_Finalize ();
->>>>>>> 972ec076527cde1a6bb4412defad3c82f5d92c6e
 	return 0;
 }
 

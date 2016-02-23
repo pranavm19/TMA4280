@@ -5,7 +5,6 @@
 
 int main(int argc, char** argv)
 {
-	double start = omp_get_wtime();
 	if (argc < 2) {
 		printf ("Requires argument: k.\n");
 		return 1;
@@ -16,7 +15,7 @@ int main(int argc, char** argv)
 		printf("Give me a number >= 3 :)\n");
 		exit (1);
 	}
-
+	double start = omp_get_wtime();
 	// A Vector to store the values for v[i] = i^(-2).
 	int n = 1 << k;
 	double sum = 0.0;

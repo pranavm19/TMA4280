@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <omp.h>
+#include <stdint.h>
 
 int main(int argc, char** argv)
 {
@@ -18,20 +19,21 @@ int main(int argc, char** argv)
 	}
 
 	// A Vector to store the values for v[i] = i^(-2).
-	int n = 1 << k;
+	int n = 1ULL << k;
 	double sum = 0.0;
 	double S = (pow((acos(-1)),2)/ 6.0);
 	
 	double* v = malloc(n*sizeof(double));
 	
 	// Set Elements of Vector.
-	for(size_t i = 0; i < n; i++){
+	#pragma omp parallel for schedule(static)
+	for(uint64_t i = 0; i < n; i++){
 		v[i] = 1.0 / pow(i+1,2);
 	}
 	
-	#pragma omp parallel for schedule(static) reduction(+:sum)
 	// Summing the Vector
-	for(size_t i = 0; i < n; i++){
+	#pragma omp parallel for schedule(static) reduction(+:sum)
+	for(uint64_t i = 0; i < n; i++){
 		sum += v[i];
 	}
 	

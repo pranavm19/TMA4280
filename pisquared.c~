@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 	}
 	
 	// Print the error vector.
-	printf ("S = %e, Sn = %e, Error = %0.16f \n", S, sum, S-sum);
+	printf ("S = %e, Sn = %e, Error = %e\n", S, sum, S-sum);
 	
 	printf("Execution Time: %0.16f \n", omp_get_wtime() - start);
 

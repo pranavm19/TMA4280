@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 	MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-	int n = 1ULL << k;	
+	int n = 1 << k;	
 	int my_n = n/nprocs;
 	int tag = 100;
 	double my_sum = 0.0;

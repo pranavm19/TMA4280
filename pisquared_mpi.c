@@ -5,7 +5,7 @@
 
 int main(int argc, char** argv)
 {
-	if (argc < 2) {
+	if (argc < 2){
 		printf ("Requires argument: k.\n");
 		return 1;
 	}
@@ -21,46 +21,44 @@ int main(int argc, char** argv)
 	MPI_Status status; 
 	MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	int tag = 100;
+	double time_start;
 
 	int n = 1ULL << k;	
 	int my_n = n/nprocs;
-	int tag = 100;
 	double my_sum = 0.0;
-	double time_start;
+	double* v = NULL;
 	
 	if (rank == 0) {
 		time_start = MPI_Wtime();
-		double* v = malloc(n*sizeof(double));	
+		v = malloc(n*sizeof(double));	
 		// Set Elements of Vector v_i = 1/(i^2).
 		for(size_t i = 0; i < n; i++){
-			v[i] = 1.0 / pow(i+1,2);
+			v[i] = 1.0 / (i+1) / (i+1);
 		}
 		// Send these elements to the other processes.
 		for(size_t i = 1; i < nprocs; i++){
 			MPI_Send(&(v[i*my_n]), my_n, MPI_DOUBLE, i, tag, MPI_COMM_WORLD);
 		}
-		for(size_t i = 0; i < my_n; i++){
-			my_sum += v[i];
-		}
-		free(v);
 	}
 	else {
 		// A Vector to handle the values for summing.
-		double* my_v = malloc((my_n)*sizeof(double));
-		MPI_Recv(my_v, my_n, MPI_DOUBLE, 0, tag, MPI_COMM_WORLD, &status);
-		// Summing the Vector
-		for(size_t i = 0; i < my_n; i++){
-			my_sum += my_v[i];
-		}
-		free(my_v);
+		v = malloc((my_n)*sizeof(double));
+		MPI_Recv(v, my_n, MPI_DOUBLE, 0, tag, MPI_COMM_WORLD, &status);
 	}
+
+	// Summing the Vector
+	for(size_t i = 0; i < my_n; i++){
+		my_sum += v[i];
+	}
+	free(v);
 	
 	double Sum;
 	MPI_Reduce(&my_sum, &Sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 	
 	if ( rank == 0) {
 		double S = (pow((acos(-1)),2)/ 6.0);
-		double duration = MPI_Wtime () - time_start ;
+		double duration = MPI_Wtime() - time_start ;
 		printf ("S = %e, Sn = %e, Error = %0.16f \n", S, Sum, S-Sum);
 		printf("Execution Time: %0.16f \n", duration);
 	}

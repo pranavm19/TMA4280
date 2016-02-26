@@ -2,22 +2,21 @@
 #include <stdio.h>
 #include <math.h>
 #include <omp.h>
-#include <stdint.h>
 
 int main(int argc, char** argv)
 {
-	double start = omp_get_wtime();
 	if (argc < 2) {
 		printf ("Requires argument: k.\n");
 		return 1;
 	}
-
 	int k = atoi(argv[1]);
 	if (k <= 2){
 		printf("Give me a number >= 3 :)\n");
 		exit (1);
 	}
-
+	
+	double start = omp_get_wtime();
+	
 	// A Vector to store the values for v[i] = i^(-2).
 	int n = 1ULL << k;
 	double sum = 0.0;
@@ -27,18 +26,18 @@ int main(int argc, char** argv)
 	
 	// Set Elements of Vector.
 	#pragma omp parallel for schedule(static)
-	for(uint64_t i = 0; i < n; i++){
-		v[i] = 1.0 / pow(i+1,2);
+	for(size_t i = 0; i < n; i++){
+		v[i] = 1.0 / (i+1) / (i+1);
 	}
 	
 	// Summing the Vector
 	#pragma omp parallel for schedule(static) reduction(+:sum)
-	for(uint64_t i = 0; i < n; i++){
+	for(size_t i = 0; i < n; i++){
 		sum += v[i];
 	}
 	
 	// Print the error vector.
-	printf ("S = %e, Sn = %e, Error = %e\n", S, sum, S-sum);
+	printf ("S = %e, Sn = %e, Error = %0.16f\n", S, sum, S-sum);
 	
 	printf("Execution Time: %0.16f \n", omp_get_wtime() - start);
 

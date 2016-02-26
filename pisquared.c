@@ -9,12 +9,12 @@ int main(int argc, char** argv)
 		printf ("Requires argument: k.\n");
 		return 1;
 	}
-
 	int k = atoi(argv[1]);
 	if (k <= 2){
 		printf("Give me a number >= 3 :)\n");
 		exit (1);
 	}
+
 	double start = omp_get_wtime();
 	// A Vector to store the values for v[i] = i^(-2).
 	int n = 1 << k;
@@ -25,7 +25,7 @@ int main(int argc, char** argv)
 
 	// Set Elements of Vector
 	for(size_t i = 0; i < n; i++){
-		v[i] = 1.0 / pow(i+1,2);
+		v[i] = 1.0 / (i+1) / (i+1);
 	}
 	
 	for(size_t i = 0; i < n; i++){

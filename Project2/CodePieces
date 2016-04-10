@@ -1,0 +1,16 @@
+
+Wanted/Unwanted code pieces!
+
+    // Each Process Prints what it has!
+    // for (size_t i = 0; i < nprocs; i++){
+    // 	if (rank == i){
+    // 		printf("I am process no. %d, My values are:\n", rank);
+    // 		for (size_t l = 0; l < block_len; l++){
+    //     		for (size_t m = 0; m < n; m++) {
+    //     		printf("%f \t", b[l][m]);
+    //     		}
+    //     		printf("\n");
+    // 		}
+    //    	}
+    //    	printf("\n");
+    // }

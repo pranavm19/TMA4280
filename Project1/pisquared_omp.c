@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 	double start = omp_get_wtime();
 	
 	// A Vector to store the values for v[i] = i^(-2).
-	int n = 1ULL << k;
+	int n = 1 << k;
 	double sum = 0.0;
 	double S = (pow((acos(-1)),2)/ 6.0);
 	

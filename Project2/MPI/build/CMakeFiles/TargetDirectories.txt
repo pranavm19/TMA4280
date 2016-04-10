@@ -1,0 +1,3 @@
+/home/pranav/TMA4280/Project2/MPI/build/CMakeFiles/common.dir
+/home/pranav/TMA4280/Project2/MPI/build/CMakeFiles/poisson.dir
+/home/pranav/TMA4280/Project2/MPI/build/CMakeFiles/poisson-f.dir

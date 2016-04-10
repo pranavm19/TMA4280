@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/pranav/TMA4280/Project2/MPI/poisson.c
+stdlib.h
+-
+stdio.h
+-
+math.h
+-
+mpi.h
+-
+
+/usr/include/mpich/mpi.h
+stddef.h
+-
+cstdint
+-
+stdint.h
+-
+mpio.h
+/usr/include/mpich/mpio.h
+mpicxx.h
+/usr/include/mpich/mpicxx.h
+
+/usr/include/mpich/mpicxx.h
+stdio.h
+-
+
+/usr/include/mpich/mpio.h
+mpi.h
+/usr/include/mpich/mpi.h
+

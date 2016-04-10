@@ -17,6 +17,7 @@ int main(int argc, char** argv)
 		exit (1);
 	}
 
+	// Mandatory MPI Function Calls
 	int nprocs, rank ;
 	MPI_Init(&argc, &argv);
 	MPI_Status status; 

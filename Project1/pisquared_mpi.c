@@ -16,6 +16,7 @@ int main(int argc, char** argv)
 		exit (1);
 	}
 
+	// Mandatory MPI Function Calls
 	int nprocs, rank ;
 	MPI_Init(&argc, &argv);
 	MPI_Status status; 
@@ -24,7 +25,7 @@ int main(int argc, char** argv)
 	int tag = 100;
 	double time_start;
 
-	int n = 1ULL << k;	
+	int n = 1 << k;	
 	int my_n = n/nprocs;
 	double my_sum = 0.0;
 	double* v = NULL;

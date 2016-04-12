@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <mpi.h>
+#include <omp.h>
 
 #define PI 3.14159265358979323846
 #define true 1
@@ -24,12 +25,18 @@ int main(int argc, char **argv)
     int nprocs, rank;
     MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    int numthreads = omp_get_max_threads();
 
     if (argc < 2) {
         printf("Usage:\n");
         printf("  poisson n\n\n");
         printf("Arguments:\n");
         printf("  n: the problem size (must be a power of 2)\n");
+    }
+
+    double time_start;
+    if (rank == 0) {
+        time_start = MPI_Wtime();
     }
 
     // The number of grid points in each direction is n+1
@@ -56,12 +63,14 @@ int main(int argc, char **argv)
 
     // Grid points
     real *grid = mk_1D_array(n+1, false);
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < n+1; i++) {
         grid[i] = i * h;
     }
 
     // The diagonal of the eigenvalue matrix of T
     real *diag = mk_1D_array(m, false);
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < m; i++) {
         diag[i] = 2.0 * (1.0 - cos((i+1) * PI / n));
     }
@@ -69,6 +78,7 @@ int main(int argc, char **argv)
     // Initialize the right hand side data
     // B is the column strip that the process owns.*
     real **B = mk_2D_array(block_col, m, false);
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < block_col; i++) {
         for (size_t j = 0; j < m; j++) {
             B[i][j] = h * h * rhs(grid[i+1+(rank*exact)], grid[j+1]);
@@ -76,35 +86,41 @@ int main(int argc, char **argv)
     }
 
     // For the Sine Transform:
-    real *z = mk_1D_array(nn, false);
+    real **z = mk_2D_array(numthreads, nn, false);
 
     // Calculate Btilde^T = S^-1 * (S * B)^T
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < block_col; i++) {
-        fst_(B[i], &n, z, &nn);
+        fst_(B[i], &n, z[omp_get_thread_num()], &nn);
     }
     transpose(B, block_col, m, nprocs, block_uk, rem_uk, rank);
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < block_col; i++) {
-        fstinv_(B[i], &n, z, &nn);
+        fstinv_(B[i], &n, z[omp_get_thread_num()], &nn);
     }
 
     // Solve Lambda * Xtilde = Btilde
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < block_col; i++) {
         for (size_t j = 0; j < m; j++) {
-            B[i][j] = B[i][j] / (diag[i+(rank*(block_col-1))] + diag[j]);
+            B[i][j] = B[i][j] / (diag[i+(rank*exact)] + diag[j]);
         }
     }
 
     // Calculate X = S^-1 * (S * Xtilde^T) ^ T
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < block_col; i++) {
-        fst_(B[i], &n, z, &nn);
+        fst_(B[i], &n, z[omp_get_thread_num()], &nn);
     }
     transpose(B, block_col, m, nprocs, block_uk, rem_uk, rank);
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < block_col; i++) {
-        fstinv_(B[i], &n, z, &nn);
+        fstinv_(B[i], &n, z[omp_get_thread_num()], &nn);
     }
 
     // Calculate maximal value of solution
     double U_max = 0.0, global_max;
+    #pragma omp parallel for schedule(static) 
     for (size_t i = 0; i < block_col; i++){
         for (size_t j = 0; j < m; j++){
             U_max = U_max > B[i][j] ? U_max : B[i][j];
@@ -117,6 +133,8 @@ int main(int argc, char **argv)
     // Print the Global Maximum on process 0:
     if (rank == 0){
         printf("U_max = %e\n", global_max);
+        double duration = MPI_Wtime() - time_start ;
+        printf("Execution Time: %0.16f \n", duration);
     }
 
     MPI_Finalize();
@@ -124,8 +142,8 @@ int main(int argc, char **argv)
 }
 
 real rhs(real x, real y) {
-    // return 2 * (y - y*y + x - x*x);
-    return 5*PI*PI*sin(PI*x)*sin(2*PI*y);
+     return 2 * (y - y*y + x - x*x);
+    //return 5*PI*PI*sin(PI*x)*sin(2*PI*y);
 }
 
 void transpose(real **B, size_t block_col, size_t m, size_t nprocs, size_t block_uk, size_t rem_uk, size_t rank)
@@ -136,6 +154,7 @@ void transpose(real **B, size_t block_col, size_t m, size_t nprocs, size_t block
 
     // Create send and recv Count and Displacement for MPI:
     int scount[nprocs], sdisp[nprocs], rcount[nprocs], rdisp[nprocs];
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < nprocs; i++){
         scount[i] = block_uk;
         sdisp[i]  = block_uk*i;
@@ -146,6 +165,7 @@ void transpose(real **B, size_t block_col, size_t m, size_t nprocs, size_t block
     rcount[nprocs-1] = rem_uk;
 
     // Wrap Data into the 1D Array sendV:
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < m; i++){
         for (size_t j = 0; j < block_col; j++){
             sendV[j + i*block_col] = B[j][i];
@@ -156,8 +176,10 @@ void transpose(real **B, size_t block_col, size_t m, size_t nprocs, size_t block
     MPI_Alltoallv(sendV, scount, sdisp, MPI_DOUBLE, recvV, rcount, rdisp, MPI_DOUBLE, MPI_COMM_WORLD);
 
     // Unwrap the Data into the 2D array B, from recvV:
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < nprocs; i++){
         int offset = rdisp[i], count = (rcount[i])/block_col;
+        #pragma omp parallel for schedule(static)
         for (size_t k = 0; k < block_col; k++){
             for (size_t j = 0; j < count; j++){
                 B[k][j+(m/nprocs)*i] = recvV[offset + k*count + j];

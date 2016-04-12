@@ -71,10 +71,10 @@ int main(int argc, char **argv)
         fst_(b[i], &n, z, &nn);
     }
     transpose(bt, b, m);
-    for (size_t i = 0; i < m; i++) {
+	for (size_t i = 0; i < m; i++) {
         fstinv_(bt[i], &n, z, &nn);
     }
-
+    
     // Solve Lambda * Xtilde = Btilde
     for (size_t i = 0; i < m; i++) {
         for (size_t j = 0; j < m; j++) {
@@ -90,8 +90,8 @@ int main(int argc, char **argv)
     for (size_t i = 0; i < m; i++) {
         fstinv_(b[i], &n, z, &nn);
     }
-
-    // Calculate maximal value of solution
+	
+	// Calculate maximal value of solution
     double u_max = 0.0;
     for (size_t i = 0; i < m; i++) {
         for (size_t j = 0; j < m; j++) {
@@ -105,9 +105,10 @@ int main(int argc, char **argv)
 }
 
 real rhs(real x, real y) {
-    //return 2 * (y - y*y + x - x*x);
-    return 5*PI*PI*sin(PI*x)*sin(2*PI*y);
+    return 2 * (y - y*y + x - x*x);
+    // return 5*PI*PI*sin(PI*x)*sin(2*PI*y);
 }
+
 
 void transpose(real **bt, real **b, size_t m)
 {

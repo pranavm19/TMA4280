@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ntnu/pranavm/TMA4280/Project2/Parallel/poisson.c
+stdlib.h
+-
+stdio.h
+-
+math.h
+-
+mpi.h
+-
+omp.h
+-
+

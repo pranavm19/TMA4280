@@ -1,0 +1,1 @@
+/sw/sdev/intel/composerxe-2011.5.220/composerxe-2011.5.220/bin/intel64/icc  -std=c99  -openmp -O3 -DNDEBUG   CMakeFiles/poisson.dir/poisson.c.o  -o poisson -rdynamic libcommon.a -lifport -lifcore -lpthread 

@@ -1,0 +1,80 @@
+Problem Size = 1024
+Numprocs = 1
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 1.0250458717346191 
+Problem Size = 1024
+Numprocs = 2
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 1.0575990676879883 
+Problem Size = 1024
+Numprocs = 3
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 0.8842470645904541 
+Problem Size = 1024
+Numprocs = 5
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 1.0862920284271240 
+Problem Size = 1024
+Numprocs = 7
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 1.1308069229125977 
+Problem Size = 1024
+Numprocs = 9
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 1.0853240489959717 
+Problem Size = 1024
+Numprocs = 13
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 1.1327171325683594 
+Problem Size = 1024
+Numprocs = 14
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 1.9484539031982422 
+Problem Size = 1024
+Numprocs = 17
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 1.4328508377075195 
+Problem Size = 1024
+Numprocs = 21
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 1.6329710483551025 
+Problem Size = 1024
+Numprocs = 23
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 2.5876049995422363 
+Problem Size = 1024
+Numprocs = 27
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 1.9318039417266846 
+Problem Size = 1024
+Numprocs = 29
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 2.3595030307769775 
+Problem Size = 1024
+Numprocs = 31
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 2.4728410243988037 
+Problem Size = 1024
+Numprocs = 33
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 2.7326622009277344 
+Problem Size = 1024
+Numprocs = 35
+U_max = 1.0000026668466540
+E_max = 0.0000026668466540
+Execution Time: 2.6918981075286865 

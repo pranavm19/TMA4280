@@ -134,7 +134,7 @@ int main(int argc, char **argv)
 
     // Print the Global Maximum on process 0:
     if (rank == 0){
-    	printf("Problem Size = %d\nNumprocs = %d\n", n, nprocs);
+    	printf("Problem Size = %d\tNumprocs = %d\tNumthreads = %d\n", n, nprocs, numthreads);
         printf("U_max = %0.16f\n", global_max);
 		printf("E_max = %0.16f\n", global_emax);
         double duration = MPI_Wtime() - time_start ;

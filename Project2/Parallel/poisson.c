@@ -119,20 +119,24 @@ int main(int argc, char **argv)
     }
 
     // Calculate maximal value of solution
-    double U_max = 0.0, global_max;
-    #pragma omp parallel for schedule(static) 
+    double U_max = 0.0, e_max = 0.0, global_max, global_emax, error;
     for (size_t i = 0; i < block_col; i++){
         for (size_t j = 0; j < m; j++){
+        	error = fabs(B[i][j] - sin(PI*(i+1+(rank*exact))*h)*sin(2*PI*(j+1)*h));
             U_max = U_max > B[i][j] ? U_max : B[i][j];
+            e_max = e_max > error ? e_max : error;
         }
     }
 
     // MPI_Max to find the true maximum:
     MPI_Reduce(&U_max, &global_max, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
+    MPI_Reduce(&e_max, &global_emax, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
 
     // Print the Global Maximum on process 0:
     if (rank == 0){
-        printf("U_max = %e\n", global_max);
+    	printf("Problem Size = %d\nNumprocs = %d\n", n, nprocs);
+        printf("U_max = %0.16f\n", global_max);
+		printf("E_max = %0.16f\n", global_emax);
         double duration = MPI_Wtime() - time_start ;
         printf("Execution Time: %0.16f \n", duration);
     }
@@ -142,8 +146,8 @@ int main(int argc, char **argv)
 }
 
 real rhs(real x, real y) {
-     return 2 * (y - y*y + x - x*x);
-    //return 5*PI*PI*sin(PI*x)*sin(2*PI*y);
+    // return 2 * (y - y*y + x - x*x);
+    return 5*PI*PI*sin(PI*x)*sin(2*PI*y);
 }
 
 void transpose(real **B, size_t block_col, size_t m, size_t nprocs, size_t block_uk, size_t rem_uk, size_t rank)
@@ -154,7 +158,6 @@ void transpose(real **B, size_t block_col, size_t m, size_t nprocs, size_t block
 
     // Create send and recv Count and Displacement for MPI:
     int scount[nprocs], sdisp[nprocs], rcount[nprocs], rdisp[nprocs];
-    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < nprocs; i++){
         scount[i] = block_uk;
         sdisp[i]  = block_uk*i;

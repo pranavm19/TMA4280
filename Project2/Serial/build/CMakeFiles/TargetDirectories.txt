@@ -1,3 +1,0 @@
-/home/ntnu/pranavm/TMA4280/Project2/Serial/build/CMakeFiles/poisson.dir
-/home/ntnu/pranavm/TMA4280/Project2/Serial/build/CMakeFiles/common.dir
-/home/ntnu/pranavm/TMA4280/Project2/Serial/build/CMakeFiles/poisson-f.dir

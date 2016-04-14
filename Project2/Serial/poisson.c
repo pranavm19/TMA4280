@@ -92,21 +92,23 @@ int main(int argc, char **argv)
     }
 	
 	// Calculate maximal value of solution
-    double u_max = 0.0;
+    double u_max = 0.0, e_max = 0.0, error;
     for (size_t i = 0; i < m; i++) {
         for (size_t j = 0; j < m; j++) {
+            error = fabs(b[i][j] - sin(PI*(i+1)*h)*(sin(2*PI*(j+1)*h)));
             u_max = u_max > b[i][j] ? u_max : b[i][j];
+            e_max = e_max > error ? e_max : error;
         }
     }
 
-    printf("u_max = %e\n", u_max);
+    printf("Problem Size = %d\nU_max = %0.16f\nE_max = %0.16f\n", n, u_max, e_max);
 
     return 0;
 }
 
 real rhs(real x, real y) {
-    return 2 * (y - y*y + x - x*x);
-    // return 5*PI*PI*sin(PI*x)*sin(2*PI*y);
+    // return 2 * (y - y*y + x - x*x);
+    return 5*PI*PI*sin(PI*x)*sin(2*PI*y);
 }
 
 

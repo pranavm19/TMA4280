@@ -1,1 +1,0 @@
-/sw/sdev/intel/composerxe-2011.5.220/composerxe-2011.5.220/bin/intel64/ifort    -O3 CMakeFiles/poisson-f.dir/poisson.f90.o  -o poisson-f  libcommon.a 

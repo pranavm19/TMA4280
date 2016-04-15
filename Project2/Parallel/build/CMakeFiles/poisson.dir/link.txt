@@ -1,0 +1,1 @@
+/sw/sgi/mpt/mpt-2.11/bin/mpicc  -std=c99  -openmp -O3 -DNDEBUG   CMakeFiles/poisson.dir/poisson.c.o  -o poisson -rdynamic libcommon.a -lmpi -lifport -lifcore -lpthread 

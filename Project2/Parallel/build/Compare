@@ -1,0 +1,57 @@
+Hybrid vs MPI Only Performance
+Problem Size = 16384	Numprocs = 1	Numthreads = 36
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 45.3284580707550049 
+Problem Size = 16384	Numprocs = 2	Numthreads = 18
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 40.6119289398193359 
+Problem Size = 16384	Numprocs = 3	Numthreads = 12
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 43.3422501087188721 
+Problem Size = 16384	Numprocs = 4	Numthreads = 9
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 38.1793968677520752 
+Problem Size = 16384	Numprocs = 6	Numthreads = 6
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 79.4796290397644043 
+Problem Size = 16384	Numprocs = 9	Numthreads = 4
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 53.0221738815307617 
+Problem Size = 16384	Numprocs = 12	Numthreads = 3
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 46.4092779159545898 
+Problem Size = 16384	Numprocs = 18	Numthreads = 2
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 22.0804719924926758 
+Problem Size = 16384	Numprocs = 36	Numthreads = 1
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 14.5941460132598877 
+Problem Size = 16384	Numprocs = 3	Numthreads = 1
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 174.2267000675201416 
+Problem Size = 16384	Numprocs = 6	Numthreads = 1
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 86.9490489959716797 
+Problem Size = 16384	Numprocs = 9	Numthreads = 1
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 57.6951119899749756 
+Problem Size = 16384	Numprocs = 12	Numthreads = 1
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 43.6824769973754883 
+Problem Size = 16384	Numprocs = 18	Numthreads = 1
+U_max = 1.0000000088874681
+E_max = 0.0000000088874682
+Execution Time: 29.0363550186157227 

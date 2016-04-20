@@ -12,4 +12,4 @@ module load mpt
 
 cd $PBS_O_WORKDIR
 
-mpiexec_mpt -n 12 omplace -nt 3 ./poisson 16384
+mpiexec_mpt -n 12 omplace -nt 3 ./poisson 16384 >> Compare

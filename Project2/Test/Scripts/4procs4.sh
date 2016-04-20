@@ -10,8 +10,8 @@ module load mpt
 
 cd $PBS_O_WORKDIR
 
-mpiexec_mpt -n 4 omplace -nt 4 ./poisson 1024
-mpiexec_mpt -n 4 omplace -nt 4 ./poisson 2048
-mpiexec_mpt -n 4 omplace -nt 4 ./poisson 4096
-mpiexec_mpt -n 4 omplace -nt 4 ./poisson 8192
-mpiexec_mpt -n 4 omplace -nt 4 ./poisson 16384
+mpiexec_mpt -n 4 omplace -nt 4 ./poisson 1024 >> Hybrid4
+mpiexec_mpt -n 4 omplace -nt 4 ./poisson 2048 >> Hybrid4
+mpiexec_mpt -n 4 omplace -nt 4 ./poisson 4096 >> Hybrid4
+mpiexec_mpt -n 4 omplace -nt 4 ./poisson 8192 >> Hybrid4
+mpiexec_mpt -n 4 omplace -nt 4 ./poisson 16384 >> Hybrid4

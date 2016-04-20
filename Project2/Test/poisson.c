@@ -182,7 +182,6 @@ void transpose(real **B, size_t block_col, size_t m, size_t nprocs, size_t block
     #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < nprocs; i++){
         int offset = rdisp[i], count = (rcount[i])/block_col;
-        // #pragma omp parallel for schedule(static)
         for (size_t k = 0; k < block_col; k++){
             for (size_t j = 0; j < count; j++){
                 B[k][j+(m/nprocs)*i] = recvV[offset + k*count + j];

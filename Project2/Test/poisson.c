@@ -47,7 +47,7 @@ int main(int argc, char **argv)
     real h = 1.0 / n;
 
     // Splitting the matrix into columns:
-    int exact = n/nprocs;
+    int exact = m/nprocs;
     int rem = m - (nprocs - 1)*exact;
     // Size of each process owns a strip matrix which is m*exact or m*remain.
     // We consider that each such a matrix is made of 'nprocs' blocks vertically.

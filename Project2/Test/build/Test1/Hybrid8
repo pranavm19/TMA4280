@@ -1,0 +1,40 @@
+Problem Size = 1024	Numprocs = 4	Numthreads = 8
+U_max = 0.9989417612322780	E_max = 0.0161237555652257	Execution Time: 0.0530049800872803 
+Problem Size = 1024	Numprocs = 8	Numthreads = 8
+U_max = 0.9978920262359680	E_max = 0.0723032486078971	Execution Time: 0.0279738903045654 
+Problem Size = 2048	Numprocs = 4	Numthreads = 8
+U_max = 0.9994724226595780	E_max = 0.0081347714636162	Execution Time: 0.2274749279022217 
+Problem Size = 2048	Numprocs = 8	Numthreads = 8
+U_max = 0.9989562638069178	E_max = 0.0368889240751712	Execution Time: 0.1169240474700928 
+Problem Size = 4096	Numprocs = 4	Numthreads = 8
+U_max = 0.9997365982705037	E_max = 0.0040857410409239	Execution Time: 0.9951179027557373 
+Problem Size = 4096	Numprocs = 8	Numthreads = 8
+U_max = 0.9994804521754739	E_max = 0.0186327602999791	Execution Time: 0.5116200447082520 
+Problem Size = 8192	Numprocs = 8	Numthreads = 8
+U_max = 0.9997408077840534	E_max = 0.0093638456018507	Execution Time: 2.1871469020843506 
+Problem Size = 8192	Numprocs = 4	Numthreads = 8
+U_max = 0.9998683958932955	E_max = 0.0020474759214979	Execution Time: 4.1012241840362549 
+Problem Size = 16384	Numprocs = 8	Numthreads = 8
+U_max = 0.9998705401960004	E_max = 0.0046938422742423	Execution Time: 9.3783848285675049 
+Problem Size = 16384	Numprocs = 4	Numthreads = 8
+U_max = 0.9999342272083400	E_max = 0.0010248923095433	Execution Time: 17.6880660057067871 
+Problem Size = 1024	Numprocs = 16	Numthreads = 8
+U_max = 0.9957004857901072	E_max = 0.2954068649369787	Execution Time: 0.0156090259552002 
+Problem Size = 1024	Numprocs = 32	Numthreads = 8
+U_max = 1.1190667998326995	E_max = 1.1184555395792202	Execution Time: 0.0086328983306885 
+Problem Size = 2048	Numprocs = 16	Numthreads = 8
+U_max = 0.9978915988488807	E_max = 0.1540599000098467	Execution Time: 0.0592880249023438 
+Problem Size = 2048	Numprocs = 32	Numthreads = 8
+U_max = 0.9956934394792680	E_max = 0.6089889297615492	Execution Time: 0.0313689708709717 
+Problem Size = 4096	Numprocs = 16	Numthreads = 8
+U_max = 0.9989562378117103	E_max = 0.0786849469766976	Execution Time: 0.2534129619598389 
+Problem Size = 4096	Numprocs = 32	Numthreads = 8
+U_max = 0.9978898772375456	E_max = 0.3178612987419251	Execution Time: 0.1323108673095703 
+Problem Size = 8192	Numprocs = 16	Numthreads = 8
+U_max = 0.9994807413231916	E_max = 0.0397633572680363	Execution Time: 1.1062541007995605 
+Problem Size = 8192	Numprocs = 32	Numthreads = 8
+U_max = 0.9989558402546624	E_max = 0.1624079710540759	Execution Time: 0.5428080558776855 
+Problem Size = 16384	Numprocs = 32	Numthreads = 8
+U_max = 0.9994806588195336	E_max = 0.0820911993620790	Execution Time: 2.3358900547027588 
+Problem Size = 16384	Numprocs = 16	Numthreads = 8
+U_max = 0.9997410265198579	E_max = 0.0199879711214007	Execution Time: 4.7335801124572754 

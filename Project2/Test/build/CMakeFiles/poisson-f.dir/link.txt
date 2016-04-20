@@ -1,0 +1,1 @@
+/sw/sgi/mpt/mpt-2.11/bin/mpif90    -O3 CMakeFiles/poisson-f.dir/poisson.f90.o  -o poisson-f  libcommon.a /sw/sgi/mpt/mpt-2.11/lib/libmpi.so 

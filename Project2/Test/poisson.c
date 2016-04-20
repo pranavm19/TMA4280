@@ -47,7 +47,7 @@ int main(int argc, char **argv)
     real h = 1.0 / n;
 
     // Splitting the matrix into columns:
-    int exact = m/nprocs;
+    int exact = n/nprocs;
     int rem = m - (nprocs - 1)*exact;
     // Size of each process owns a strip matrix which is m*exact or m*remain.
     // We consider that each such a matrix is made of 'nprocs' blocks vertically.
@@ -63,14 +63,14 @@ int main(int argc, char **argv)
 
     // Grid points
     real *grid = mk_1D_array(n+1, false);
-    // #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < n+1; i++) {
         grid[i] = i * h;
     }
 
     // The diagonal of the eigenvalue matrix of T
     real *diag = mk_1D_array(m, false);
-    // #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < m; i++) {
         diag[i] = 2.0 * (1.0 - cos((i+1) * PI / n));
     }
@@ -78,7 +78,7 @@ int main(int argc, char **argv)
     // Initialize the right hand side data
     // B is the column strip that the process owns.*
     real **B = mk_2D_array(block_col, m, false);
-    // #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < block_col; i++) {
         for (size_t j = 0; j < m; j++) {
             B[i][j] = h * h * rhs(grid[i+1+(rank*exact)], grid[j+1]);
@@ -89,18 +89,18 @@ int main(int argc, char **argv)
     real **z = mk_2D_array(numthreads, nn, false);
 
     // Calculate Btilde^T = S^-1 * (S * B)^T
-    // #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < block_col; i++) {
         fst_(B[i], &n, z[omp_get_thread_num()], &nn);
     }
     transpose(B, block_col, m, nprocs, block_uk, rem_uk, rank);
-    // #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < block_col; i++) {
         fstinv_(B[i], &n, z[omp_get_thread_num()], &nn);
     }
 
     // Solve Lambda * Xtilde = Btilde
-    // #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < block_col; i++) {
         for (size_t j = 0; j < m; j++) {
             B[i][j] = B[i][j] / (diag[i+(rank*exact)] + diag[j]);
@@ -108,12 +108,12 @@ int main(int argc, char **argv)
     }
 
     // Calculate X = S^-1 * (S * Xtilde^T) ^ T
-    // #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < block_col; i++) {
         fst_(B[i], &n, z[omp_get_thread_num()], &nn);
     }
     transpose(B, block_col, m, nprocs, block_uk, rem_uk, rank);
-    // #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < block_col; i++) {
         fstinv_(B[i], &n, z[omp_get_thread_num()], &nn);
     }
@@ -135,8 +135,8 @@ int main(int argc, char **argv)
     // Print the Global Maximum on process 0:
     if (rank == 0){
     	printf("Problem Size = %d\tNumprocs = %d\tNumthreads = %d\n", n, nprocs, numthreads);
-        printf("U_max = %0.16f\n", global_max);
-		printf("E_max = %0.16f\n", global_emax);
+        printf("U_max = %0.16f\t", global_max);
+		printf("E_max = %0.16f\t", global_emax);
         double duration = MPI_Wtime() - time_start ;
         printf("Execution Time: %0.16f \n", duration);
     }
@@ -168,7 +168,7 @@ void transpose(real **B, size_t block_col, size_t m, size_t nprocs, size_t block
     rcount[nprocs-1] = rem_uk;
 
     // Wrap Data into the 1D Array sendV:
-    // #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < m; i++){
         for (size_t j = 0; j < block_col; j++){
             sendV[j + i*block_col] = B[j][i];
@@ -179,7 +179,7 @@ void transpose(real **B, size_t block_col, size_t m, size_t nprocs, size_t block
     MPI_Alltoallv(sendV, scount, sdisp, MPI_DOUBLE, recvV, rcount, rdisp, MPI_DOUBLE, MPI_COMM_WORLD);
 
     // Unwrap the Data into the 2D array B, from recvV:
-    // #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for (size_t i = 0; i < nprocs; i++){
         int offset = rdisp[i], count = (rcount[i])/block_col;
         // #pragma omp parallel for schedule(static)
